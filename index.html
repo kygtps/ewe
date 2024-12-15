@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝗧𝗢𝗢𝗟𝗦 𝗘𝗡𝗖 𝗙𝗔𝗞𝗘 𝗕𝗬 𝗭𝗢𝗫</title>
+    <style>
+        body {
+            background-image: url('https://storage.neko.pe/file/pA~lesywW6VMYn~gcjVZ.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden; /* Menghindari scrolling horizontal */
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .link-boxes a span {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff0080, #ff8c00, #ffd700, #00ff00, #008cff, #8000ff, #ff0080);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: animateFastGradient 1s infinite linear;
+        }
+
+        @keyframes animateFastGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        select, input[type="text"], button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 2px solid #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            width: 100%;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #ff0080;
+            border: none;
+            font-size: 1.1em;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff5757;
+        }
+
+        #result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .upload-box {
+            margin-top: 20px;
+        }
+
+        .input-box {
+            max-width: 500px;
+            margin: 0 auto;
+            overflow-x: hidden; /* Disable horizontal scroll */
+        }
+
+        .input-box input, .input-box select {
+            width: 100%;
+            font-size: 1.2em;
+        }
+
+        .file-input {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            font-size: 1em;
+            margin-top: 10px;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .file-input:hover {
+            background-color: #45a049;
+        }
+
+        .input-box textarea {
+            width: 100%;
+            height: 150px;
+            font-size: 1.2em;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            margin-bottom: 20px;
+            resize: vertical;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Encoding and Decoding Tools</h1>
+    
+    <!-- Encoding Section -->
+    <h2>𝗘𝗡𝗖</h2>
+    <div class="input-box">
+        <textarea id="input-enc" placeholder="Enter text to encode"></textarea>
+        <select id="select-enc">
+            <option value="base64">𝗕𝗔𝗦𝗘𝟲𝟰</option>
+            <option value="hex">𝗛𝗘𝗫𝗔𝗗𝗘𝗖𝗜𝗠𝗔𝗟</option>
+            <option value="custom-x">𝗖𝗨𝗦𝗧𝗢𝗠 𝗘𝗡𝗖 (\𝗫)</option>
+            <option value="custom-u0">𝗖𝗨𝗦𝗧𝗢𝗠 𝗘𝗡𝗖 (\𝗨𝟬)</option>
+        </select>
+        <button onclick="encodeText()">𝗗𝗘𝗖</button>
+        <button onclick="copyToClipboard('encoded-result')">𝗦𝗔𝗟𝗜𝗡</button>
+        <button onclick="downloadResult('encoded-result')">𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗</button>
+        <div class="upload-box">
+            <input type="file" id="file-input-enc" onchange="uploadFile('encode')" class="file-input" />
+        </div>
+        <div id="result-box">
+            <h3>𝗛𝗔𝗦𝗜𝗟 𝗘𝗡𝗖 :</h3>
+            <pre id="encoded-result"></pre>
+        </div>
+    </div>
+    
+    <!-- Decoding Section -->
+    <h2>𝗗𝗘𝗖</h2>
+    <div class="input-box">
+        <textarea id="input-dec" placeholder="Enter text to decode"></textarea>
+        <select id="select-dec">
+            <option value="base64">𝗕𝗔𝗦𝗘𝟲𝟰</option>
+            <option value="hex">𝗛𝗘𝗫𝗔𝗗𝗘𝗖𝗜𝗠𝗔𝗟</option>
+            <option value="custom-x">𝗖𝗨𝗦𝗧𝗢𝗠 𝗗𝗘𝗖 (\𝗫)</option>
+            <option value="custom-u0">𝗖𝗨𝗦𝗧𝗢𝗠 𝗗𝗘𝗖 (\𝗨𝟬)</option>
+        </select>
+        <button onclick="decodeText()">𝗗𝗘𝗖</button>
+        <button onclick="copyToClipboard('decoded-result')">𝗦𝗔𝗟𝗜𝗡</button>
+        <button onclick="downloadResult('decoded-result')">𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗</button>
+        <div class="upload-box">
+            <input type="file" id="file-input-dec" onchange="uploadFile('decode')" class="file-input" />
+        </div>
+        <div id="result-box">
+            <h3>𝗛𝗔𝗦𝗜𝗟 𝗗𝗘𝗖:</h3>
+            <pre id="decoded-result"></pre>
+        </div>
+    </div>
+
+    <script>
+        function encodeText() {
+            const text = document.getElementById('input-enc').value;
+            const encodingType = document.getElementById('select-enc').value;
+            let encodedText = '';
+
+            switch (encodingType) {
+                case 'base64':
+                    encodedText = btoa(text);
+                    break;
+                case 'hex':
+                    encodedText = hexEncode(text);
+                    break;
+                case 'custom-x':
+                    encodedText = customEncodeX(text);
+                    break;
+                case 'custom-u0':
+                    encodedText = customEncodeU0(text);
+                    break;
+                default:
+                    encodedText = 'Invalid encoding type selected';
+            }
+
+            document.getElementById('encoded-result').textContent = encodedText;
+        }
+
+        function decodeText() {
+            const text = document.getElementById('input-dec').value;
+            const decodingType = document.getElementById('select-dec').value;
+            let decodedText = '';
+
+            switch (decodingType) {
+                case 'base64':
+                    decodedText = atob(text);
+                    break;
+                case 'hex':
+                    decodedText = hexDecode(text);
+                    break;
+                case 'custom-x':
+                    decodedText = customDecodeX(text);
+                    break;
+                case 'custom-u0':
+                    decodedText = customDecodeU0(text);
+                    break;
+                default:
+                    decodedText = 'Invalid decoding type selected';
+            }
+
+            document.getElementById('decoded-result').textContent = decodedText;
+        }
+
+        // Hexadecimal Encoding
+        function hexEncode(text) {
+            return text.split('').map(c => '\\x' + c.charCodeAt(0).toString(16)).join('');
+        }
+
+        function hexDecode(text) {
+            let decoded = '';
+            const hexArr = text.split('\\x').filter(x => x !== '');
+            hexArr.forEach(hex => {
+                decoded += String.fromCharCode(parseInt(hex, 16));
+            });
+            return decoded;
+        }
+
+        // Custom Encoding (\\x)
+        function customEncodeX(text) {
+            return text.split('').map(c => '\\x' + c.charCodeAt(0).toString(16)).join('');
+        }
+
+        function customDecodeX(text) {
+            let decoded = '';
+            const hexArr = text.split('\\x').filter(x => x !== '');
+            hexArr.forEach(hex => {
+                decoded += String.fromCharCode(parseInt(hex, 16));
+            });
+            return decoded;
+        }
+
+        // Custom Encoding (\\u0)
+        function customEncodeU0(text) {
+            return text.split('').map(c => '\\u0' + c.charCodeAt(0).toString(16)).join('');
+        }
+
+        function customDecodeU0(text) {
+            let decoded = '';
+            const hexArr = text.split('\\u0').filter(x => x !== '');
+            hexArr.forEach(hex => {
+                decoded += String.fromCharCode(parseInt(hex, 16));
+            });
+            return decoded;
+        }
+
+        // Copy result to clipboard
+        function copyToClipboard(resultId) {
+            const resultText = document.getElementById(resultId).textContent;
+            navigator.clipboard.writeText(resultText).then(function() {
+                alert('Result copied to clipboard!');
+            }, function(err) {
+                alert('Failed to copy text: ', err);
+            });
+        }
+
+        // Download the result as a text file
+        function downloadResult(resultId) {
+            const resultText = document.getElementById(resultId).textContent;
+            const blob = new Blob([resultText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = resultId + '.txt';
+            link.click();
+        }
+
+        // Upload file and handle encoding/decoding based on the file type
+        function uploadFile(action) {
+            const input = action === 'encode' ? document.getElementById('file-input-enc') : document.getElementById('file-input-dec');
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const fileContent = e.target.result;
+                if (action === 'encode') {
+                    document.getElementById('input-enc').value = fileContent;
+                    encodeText(); // Encode the file content automatically
+                } else {
+                    document.getElementById('input-dec').value = fileContent;
+                    decodeText(); // Decode the file content automatically
+                }
+            };
+
+            reader.readAsText(input.files[0]);
+        }
+    </script>
+</body>
+</html>
